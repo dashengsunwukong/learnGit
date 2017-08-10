@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>react</title>
+  	<script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+  	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+  	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+</head>
+<body>
+	<div id="root"></div>
+	<script type="text/babel">
+		class Text extends React.Component{
+			constructor(props){
+				super(props);
+				var now = new Date().getSeconds();
+				this.state = {
+					time: now
+				};
+				this.timer = null;
+				this.getTime = this.getTime.bind(this);
+			}
+
+			getTime(){
+				var t = new Date().getSeconds();
+				this.setState({time: t});
+			}
+
+			componentWillMount(){
+				this.timer = setInterval(this.getTime,3000);
+			}
+
+			render(){
+				return (
+					<div>
+						当前秒数是{this.state.time % 2 > 0 ? '是奇数':'是偶数'}
+					</div>
+					)
+			}
+
+			conponentWillUnmount(){
+				clearInterval(this.timer);
+			}
+
+		}
+
+		ReactDOM.render(<Text />,
+			document.getElementById('root')
+		)
+
+
+	</script>
+</body>
+</html>
